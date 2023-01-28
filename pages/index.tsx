@@ -1,21 +1,24 @@
-import useSWR from 'swr'
-import PersonComponent from '../components/Person'
-import type { Person } from '../interfaces'
+import AnagramSorter from '../components/AnagramSorter'
+import styled from 'styled-components'
+import ReceiptInsights from '../components/ReceiptInsights'
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+const AppContainer = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+`
 
 export default function Index() {
-  const { data, error, isLoading } = useSWR<Person[]>('/api/people', fetcher)
-
-  if (error) return <div>Failed to load</div>
-  if (isLoading) return <div>Loading...</div>
-  if (!data) return null
-
-  return (
-    <ul>
-      {data.map((p) => (
-        <PersonComponent key={p.id} person={p} />
-      ))}
-    </ul>
-  )
+    return (
+        <AppContainer>
+            <AnagramSorter />
+            <ReceiptInsights />
+        </AppContainer>
+    )
 }
